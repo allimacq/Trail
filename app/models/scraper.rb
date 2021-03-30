@@ -31,7 +31,7 @@ class Scraper
     def self.create_state_trails(state)
         self.scrape_state_trails(state).each do |state_trail|
             matching_state = State.find_by(name: state)
-            trail = Trail.create(name: "#{state_trail.css('td.info div a h3').text.strip}", state_id: matching_state.id, info: state_trail.css("td.info div")[1].text, distance: "#{state_trail.css('td.length').text.strip.scan(/[^ mi]/).join}", surface: "#{state_trail.css('td.surface').text.strip}")
+            trail = Trail.create_or_find_by(name: "#{state_trail.css('td.info div a h3').text.strip}", state_id: matching_state.id, info: state_trail.css("td.info div")[1].text, distance: "#{state_trail.css('td.length').text.strip.scan(/[^ mi]/).join}", surface: "#{state_trail.css('td.surface').text.strip}")
             matching_state.trails << trail
             matching_state.save
         end

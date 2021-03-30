@@ -1,7 +1,10 @@
-<h1>Trails</h1>
-<% @trails.each do |trail|%>
-<%= trail.name %>
+<h1>Trails in <%= @state.name %></h1>
 
-
-
-<% end %>
+<% @state.trails.each do |trail|%>
+<h3><%= trail.name %></h3>
+<ul>Brief Description: <%= trail.info%></ul>
+<ul>Trail Length: <%= trail.distance%> miles</ul>
+<ul>Trail Surface: <%= trail.surface%></ul>
+<ul>Trail added by: INSERT USER HERE </ul>
+<br>
+<% end%>
