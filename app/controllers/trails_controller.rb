@@ -6,7 +6,7 @@ class TrailsController < ApplicationController
     #use Rack::Flash
 
     get '/trails' do
-        @states = State.all
+        @trails = Trail.all
         erb :'/trails/show'
     end
 

@@ -13,38 +13,36 @@ class Scraper
                 link: "http://traillink.com" + "#{state.css("a").attribute("href").value}"
               }
         end
-        @@links.take!(51)
+        @@links = @@links.take(51)
     end
 
     def self.create_states
-        @@links.each do |state|
-            State.create(name: "#{state.css('a').text.strip}")
+        @@links.each do |hash|
+            State.create_or_find_by(name: hash[:state])
         end
     end
 
-    def self.scrape_state_trails
-       @@links.collect do |state, link|
-            state_page = Nokogiri::HTML(URI.open(link))
-            @@links << {
-            "{state}" => state_page.css('table.search-result-table tbody tr.search-result-card.hide-for-small-only')
-            }
-        end
+    def self.scrape_state_trails(state)
+        state_link = @@links.find {|h| h[:state] == state}[:link]
+        state_page = Nokogiri::HTML(URI.open(state_link))
+        table_of_trails = state_page.css('table.search-result-table tbody tr.search-result-card.hide-for-small-only')
     end
 
-    def self.create_trails
-        @@links.each do |state, state_page|
-        #self.scrape_trails.each do |state, css|
+    def self.create_state_trails(state)
+        self.scrape_state_trails(state).each do |state_trail|
             matching_state = State.find_by(name: state)
-            trail = Trail.create(name: "#{state_page.css('td.info div a h3').text.strip}", state_id: state.id, info: results.css("td.info div")[1].text, distance: "#{results.css('td.length').text.strip.scan(/[^ mi]/).join}", surface: "#{results.css('td.surface').text.strip}")
+            trail = Trail.create(name: "#{state_trail.css('td.info div a h3').text.strip}", state_id: matching_state.id, info: state_trail.css("td.info div")[1].text, distance: "#{state_trail.css('td.length').text.strip.scan(/[^ mi]/).join}", surface: "#{state_trail.css('td.surface').text.strip}")
             matching_state.trails << trail
+            matching_state.save
         end
     end
 
     def self.call
         self.scrape_page
         self.create_states
-        self.scrape_state_trails
-        self.create_trails
+        State.all.each do |state|
+            self.create_state_trails(state.name)
+        end
     end
 
 
