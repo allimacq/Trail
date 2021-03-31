@@ -12,7 +12,7 @@ class TrailsController < ApplicationController
     end
 
     get '/trails/:state' do
-        @state = State.find_by(name: params[:state])
+        @state = State.find_by_slug(params[:state])
         erb :'/trails/show'
     end
 
