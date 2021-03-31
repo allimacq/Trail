@@ -1,0 +1,14 @@
+<h1><%= @trail.name %></h1>
+
+
+<h4>Trail Info:</h4> 
+<%= @trail.info%>
+<h4>Trail Length:</h4> 
+<%= @trail.distance%> miles
+<h4>Trail Surface:</h4>
+<%= @trail.surface%><br>
+<br>
+<% @state = State.find_by_id(@trail.state_id)%>
+<a href="/<%= @state.slug %>">View More Trails in <%= @state.name %> </a><br>
+
+<a href="/">Home</a>

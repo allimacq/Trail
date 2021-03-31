@@ -1,10 +1,14 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1>Create a Trail! </h1>
 
-<form method="post" action="trails/new">
+<form method="post" action="/trails/new">
 
     <h4>Select Which State the Trail is In:</h4>
     <% State.all.each do |state|%>
-    <input type="radio" name="<%= state.id %>" value="<%= state.name %>"><%= state.name %>
+    <input type="radio" name="trail[state_id]" value="<%= state.id %>"><%= state.name %>
     <% end %>
 
     <h4>Trail Name:</h4>

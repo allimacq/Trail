@@ -1,0 +1,12 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
+<h1>Your Trails</h1>
+<% @user.trails.each do |trail|%>
+<h4><%= trail.name%></h4>
+<a href="trails/<%= trail.slug %>/edit">Edit Trail </a><br>
+<a href="trails/<%= trail.slug %>/delete">Delete Trail</a>
+<%end%>
+
+<a href="/trails/new">Create Another Trail</a>

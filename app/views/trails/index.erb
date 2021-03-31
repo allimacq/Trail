@@ -1,4 +1,13 @@
-<h1>View Trails by State</h1>
-<% @states.each do |state|%>
-<a href="/trails/<%= state.slug %>"><h3><%= state.name %></h3></a>
+<h1>Trails in <%= @state.name %></h1>
+
+
+<% Trail.all.each do |trail|%>
+    <% if trail.state_id == @state.id %>
+<a href="/trails/<%= trail.slug %>"><h3><%= trail.name %></h3></a>
+<ul>Trail Info: <%= trail.info%></ul>
+<ul>Trail Length: <%= trail.distance%> miles</ul>
+<ul>Trail Surface: <%= trail.surface%></ul>
+<ul>Trail added by: <%= trail.user_id%> </ul>
+<br>
 <% end %>
+<% end%>

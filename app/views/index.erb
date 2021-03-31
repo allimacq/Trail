@@ -1,0 +1,8 @@
+<h1>Find Accessible Trails by State!</h1>
+<ul><a href="/login">Log In</a>
+<a href="/signup">Sign Up</a></ul>
+
+
+<% @states.each do |state|%>
+<a href="/states/<%= state.slug %>"><h3><%= state.name %></h3></a>
+<% end %>
