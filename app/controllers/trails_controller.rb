@@ -11,23 +11,23 @@ class TrailsController < ApplicationController
         erb :'/trails/index'
     end
 
-    get '/trails/:state' do
-        @state = State.find_by_slug(params[:state])
-        erb :'/trails/show'
-    end
-
     get "/trails/new" do
         #user must be logged in to create new trail.
-        if session[:user_id]
+        #if session[:user_id]
             erb :'/trails/new'
-        else
+        #else
             #flash message that user must be logged in to create new trails and redirect to login page
-            erb :'/users/login'
-        end
+            #erb :'/users/login'
+        #end
+    end
+
+    get '/trails/:state' do
+        @state = State.find_by_slug(params[:state])
+        erb :'/trails/show_state'
     end
 
     post "/trails/new" do
-        
+
     end
 
 end

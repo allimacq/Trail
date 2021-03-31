@@ -2,32 +2,36 @@
 
 <form method="post" action="trails/new">
 
-    <label>Select Which State the Trail is In:</label>
+    <h4>Select Which State the Trail is In:</h4>
     <% State.all.each do |state|%>
-    <input type="radio" name="<%= state.id %>" value="<%= state.name %>">
+    <input type="radio" name="<%= state.id %>" value="<%= state.name %>"><%= state.name %>
     <% end %>
 
-    <label>Trail Name:</label>
+    <h4>Trail Name:</h4>
     <input type="text" name="trail[name]" required>
 
-    <label>Trail Length (in miles):</label>
-    <input type="text" name="trail[distance]" required>
-
-    <label>Trail Surface</label>
-    <% surfaces = [ ]%>
-    <% Trail.all.each do |trail|%>
-        <% if surfaces.include?(trail.surface) == false %>
-            <% surfaces << trail.surface %>
-        <% end %>
-        <% surfaces.each do |surface| %>
-        <input type="checkbox" name="trail[surface]" value="<% surface %>%">
-        <% end %>
-    <% end %>
-
-    <label>Trail Info:</label>
-    <textarea name="trail[info]" rows="5" cols="50"required>
+    <h4>Trail Info:</h4>
     <p> For the trail info, please add any information that someone who uses a stroller or wheelchair
     would need to know in order to enjoy the trail. Thank you for your contribution! </p>
+    <textarea name="trail[info]" rows="5" cols="50"required></textarea><br>
 
+    <h4>Trail Length (in miles):</h4>
+    <input type="text" name="trail[distance]" required>
+
+    <h4>Trail Surface:</h4>
+    <% surfaces = [ ]%>
+    <% Trail.all.each do |trail|%>
+        <% trail.surface.split(", ").each do |surface|%>
+            <% if surfaces.include?(surface) == false %>
+                <% surfaces << surface %>
+                <%end%>
+        <% end %>
+    <%end%>
+    <% surfaces.each do |surface| %>
+    <input type="checkbox" name="trail[surface]" value="<%= surface %>%"><%= surface %>
+    <% end %><br>
+   
+
+    <br>
     <input type="submit" value="Create New Trail!">
 </form>
