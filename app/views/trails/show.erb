@@ -8,7 +8,7 @@
 <%= @trail.surface%><br>
 <br>
 
-<a href="/trails/<%= @trail.slug %>">Edit Trail</a>
+<a href="/trails/<%= @trail.id %>">Edit Trail</a>
 <% @state = State.find_by_id(@trail.state_id)%>
 <a href="/states/<%= @state.slug %>">View More Trails in <%= @state.name %> </a><br>
 

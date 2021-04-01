@@ -20,14 +20,14 @@ class TrailsController < ApplicationController
         end
     end
 
-    get '/trails/:name' do
-        @trail = Trail.find_by_slug(params[:name])
+    get '/trails/:id' do
+        @trail = Trail.find_by_id(params[:id])
         @user = User.find_by_id(@trail.user_id)
         erb :'/trails/show'
     end
 
-    get "/trails/:name/edit" do
-        @trail = Trail.find_by_slug(params[:name])
+    get "/trails/:id/edit" do
+        @trail = Trail.find_by_id(params[:id])
         if session[:user_id] == @trail.user_id
             erb :'/trails/edit'
         else
@@ -53,17 +53,17 @@ class TrailsController < ApplicationController
 
     end
 
-    patch "/trails/:name" do
+    patch "/trails/:id" do
         #making sure nothing is empty
         if params[:trail].empty?
             #retun error if empty
             flash[:message] = "Error. Please try again."
         else
-            #if they don't edit the name:
-            if Trail.find_by_id(params[:trail][:name])
-                @trail = Trail.find_by_slug(params[:trail][:name])
+            @trail = Trail.find_by_id(params[:id])
+            @state = State.find_by_id(@trail.id)
             @trail.surface = []
-            @trail
+            @trail.update(name: params[:trail][:name], )
+            @state.trails << @trail
             end
         #if the name HAS been changed
         else

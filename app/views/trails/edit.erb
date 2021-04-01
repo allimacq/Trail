@@ -4,12 +4,12 @@
 
 <h1>Edit <%= @trail.name %></h1>
 
-<form method="post" action="/trails/<%= @trail.name %>">
+<form method="post" action="/trails/<%= @trail.id %>">
 <input type="hidden" name="_method" id="hidden" value="patch">
 
     <h4>Edit State:</h4>
     <% State.all.each do |state|%>
-    <input type="radio" name="<%= state.id %>" value="<%= state.name %>"><%= state.name %>
+    <input type="radio" name="trail[state_id]" value="<%= state.id %>"><%= state.name %>
     <% end %>
 
     <h4>Edit Trail Name:</h4>

@@ -4,7 +4,7 @@
 
 <% Trail.all.each do |trail|%>
     <% if trail.state_id == @state.id %>
-<a href="/trails/<%= trail.slug %>"><h3><%= trail.name %></h3></a>
+<a href="/trails/<%= trail.id %>"><h3><%= trail.name %></h3></a>
 <ul>Trail Info: <%= trail.info%></ul>
 <ul>Trail Length: <%= trail.distance%> miles</ul>
 <ul>Trail Surface: <%= trail.surface%></ul>
