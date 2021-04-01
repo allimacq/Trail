@@ -1,13 +1,12 @@
 class UsersController < ApplicationController
 
     get '/signup' do
-        #only want people NOT logged in to view signup page
-        #if session[:user_id]
-            #redirect "/show"
-        #will redirect them to their homepage if they are logged in
+        if session[:user_id]
+            @user = User.find_by_id(session[:user_id])
+            redirect "/users/#{@user.id}"
         #else
-            erb :'/users/signup'
-        #end
+            #erb :'/users/signup'
+        end
     end
 
     post '/signup' do
@@ -55,7 +54,7 @@ class UsersController < ApplicationController
     end
 
 
-    get "/:id" do
+    get "/users/:id" do
         @user = User.find_by_id((params[:id]).to_i)
         erb :'/users/show'
     end
