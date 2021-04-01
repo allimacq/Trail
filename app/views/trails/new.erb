@@ -25,14 +25,14 @@
     <h4>Trail Surface:</h4>
     <% surfaces = [ ]%>
     <% Trail.all.each do |trail|%>
-        <% trail.surface.split(", ").strip.each do |surface|%>
+        <% trail.surface.split(", ").each do |surface|%>
             <% if surfaces.include?(surface) == false %>
                 <% surfaces << surface %>
                 <%end%>
         <% end %>
     <%end%>
     <% surfaces.each do |surface| %>
-    <input type="checkbox" name="trail[surface][]" value="<%= surface %>%"><%= surface %>
+    <input type="checkbox" name="trail[surface][]" value="<%= surface.strip %>%"><%= surface %>
     <% end %><br>
    
 

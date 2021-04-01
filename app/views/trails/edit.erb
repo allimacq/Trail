@@ -1,6 +1,10 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1>Edit <%= @trail.name %></h1>
 
-<form method="post" action="trails/new">
+<form method="post" action="/trails/<%= @trail.name %>">
 <input type="hidden" name="_method" id="hidden" value="patch">
 
     <h4>Edit State:</h4>
@@ -9,7 +13,7 @@
     <% end %>
 
     <h4>Edit Trail Name:</h4>
-    <input type="text" name="trail[name]" value="<%=trail.name %>" required>
+    <input type="text" name="trail[name]" value="<%=@trail.name %>" required>
 
     <h4>Edit Trail Info:</h4>
     <textarea name="trail[info]" rows="5" cols="50"required><%= @trail.info %></textarea><br>
@@ -27,7 +31,7 @@
         <% end %>
     <%end%>
     <% surfaces.each do |surface| %>
-    <input type="checkbox" name="trail[surface]" value="<%= surface %>%"><%= surface %>
+    <input type="checkbox" name="trail[surface][]" value="<%= surface.strip %>%" <%='checked' if @trail.surface.include?(surface)%>><%= surface %>
     <% end %><br>
    
 
