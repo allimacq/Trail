@@ -25,7 +25,7 @@
     <h4>Trail Surface:</h4>
     <% surfaces = [ ]%>
     <% Trail.all.each do |trail|%>
-        <% trail.surface.split(", ").each do |surface|%>
+        <% trail.surface.split(", ").strip.each do |surface|%>
             <% if surfaces.include?(surface) == false %>
                 <% surfaces << surface %>
                 <%end%>

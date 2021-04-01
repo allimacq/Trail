@@ -1,5 +1,6 @@
 <h1>Trails in <%= @state.name %></h1>
 
+<a href="/">Home</a>
 
 <% Trail.all.each do |trail|%>
     <% if trail.state_id == @state.id %>

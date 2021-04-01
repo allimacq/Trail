@@ -4,8 +4,8 @@ class UsersController < ApplicationController
         if session[:user_id]
             @user = User.find_by_id(session[:user_id])
             redirect "/users/#{@user.id}"
-        #else
-            #erb :'/users/signup'
+        else
+            erb :'/users/signup'
         end
     end
 
@@ -26,6 +26,7 @@ class UsersController < ApplicationController
 
     get "/login" do
         #logged in users cannot view this. will redirect them to the homepage
+        #if User.logged_in?(session)
         if session[:user_id]
             redirect "/"
         else
@@ -55,8 +56,13 @@ class UsersController < ApplicationController
 
 
     get "/users/:id" do
+        #only users can view their homepage
         @user = User.find_by_id((params[:id]).to_i)
-        erb :'/users/show'
+        if session[:user_id] == @user.id
+            erb :'/users/show'
+        else
+            redirect '/'
+        end
     end
 
 

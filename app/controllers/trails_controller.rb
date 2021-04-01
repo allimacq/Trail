@@ -11,13 +11,13 @@ class TrailsController < ApplicationController
     end
 
     get "/trails/new" do
-        #user must be logged in to create new trail.
-        #if session[:user_id]
+        if User.logged_in?(session) == true
+            @user = User.user(session)
             erb :'/trails/new'
-        #else
+        else
             #flash message that user must be logged in to create new trails and redirect to login page
-            #erb :'/users/login'
-        #end
+            redirect "/login"
+        end
     end
 
     get '/trails/:name' do
@@ -33,11 +33,12 @@ class TrailsController < ApplicationController
 
     post "/trails/new" do
         if params[:trail].empty? == false
+            @user = User.user(session)
             @trail = Trail.create(params[:trail])
-            @trail.user_id = 
             @state = State.find_by_id(@trail.state_id.to_i)
             @state.trails << @trail
             @state.save
+            @user.trails << @trail
             flash[:message] = "Trail successfully added! Thank you for your contribution!"
             redirect "/trails/#{@trail.slug}"
         else

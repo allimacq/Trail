@@ -2,15 +2,16 @@
   <%= flash[:message] %>
 <% end %>
 
-<h1>Your Trails, <%= @user.username %></h1>
-<%= @user.trails %>
-<% @user.trails.each do |trail|%>
-  <%= trail.name %>
 
-<a href="trails/<%= trail.slug %>/edit">Edit Trail </a><br>
-<a href="trails/<%= trail.slug %>/delete">Delete Trail</a>
+<h1>Your Trails, <%= @user.username %></h1>
+
+<% @user.trails.each do |trail|%>
+ <h3> <%= trail.name %><br> </h3>
+<a href="/trails/<%= trail.slug %>">View <%= trail.name %></a><br>
+<a href="/trails/<%= trail.slug %>/edit">Edit <%= trail.name %> </a><br>
+<a href="/trails/<%= trail.slug %>/delete">Delete <%= trail.name %></a><br>
 <%end%>
-<h4>Here</h4>
-<a href="/trails/new">Create Another Trail</a>
+<br><br>
+<a href="/trails/new">Create A Trail</a>
 <a href="/">Home</a>
 <a href="/logout"> Log Out </a>

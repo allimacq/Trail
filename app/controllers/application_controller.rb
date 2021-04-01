@@ -8,7 +8,7 @@ class ApplicationController < Sinatra::Base
         set :views, 'app/views'
         enable :sessions
         use Rack::Flash
-        #set :session_secret, "need to figure out how to not manually set this"
+        set :session_secret, "need to figure out how to not manually set this"
     end
 
     get "/" do
