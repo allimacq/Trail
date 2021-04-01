@@ -27,8 +27,8 @@ class TrailsController < ApplicationController
     end
 
     get "/trails/:id/edit" do
-        @trail = Trail.find_by_id(params[:id])
         if session[:user_id] == @trail.user_id
+            @trail = Trail.find_by_id(params[:id])
             erb :'/trails/edit'
         else
             redirect "/"
@@ -58,24 +58,30 @@ class TrailsController < ApplicationController
         if params[:trail].empty?
             #retun error if empty
             flash[:message] = "Error. Please try again."
+            redirect "/trails/#{params[:id].to_i}/edit"
         else
+            @user = User.user(session)
             @trail = Trail.find_by_id(params[:id])
-            @state = State.find_by_id(@trail.id)
+            @state = State.find_by_id(params[:trail][:state_id])
             @trail.surface = []
-            @trail.update(name: params[:trail][:name], )
+            @trail.update(name: params[:trail][:name], info: params[:trail][:info], distance: params[:trail][:distance], surface: params[:trail][:surface])
             @state.trails << @trail
-            end
-        #if the name HAS been changed
-        else
-            @delete = Trail.find_by(name: params[:trail][:name])
-            @delete.destroy
-            
-
-
-        #need to make sure params aren't empty!
-        #then redirect to individual trail page
-        #if not flash error message and redirect to edit again
+            @user.trails << @trail
+            redirect "/trails/#{@trail.id}"
+        end
     end
+
+    delete "/trails/:id/delete" do
+        @trail = Trail.find_by_id(params[:id])
+        if session[:user_id] == @trail.user_id
+            @trail.delete
+            redirect "/users/#{session[:user_id]}"
+        else
+            flash[:message] = "You can only delete your own trails."
+            redirect "/users/#{session[:user_id]}"
+        end
+    end
+
 
 
 end

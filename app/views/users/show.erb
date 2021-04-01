@@ -7,9 +7,9 @@
 
 <% @user.trails.each do |trail|%>
  <h3> <%= trail.name %><br> </h3>
-<a href="/trails/<%= trail.slug %>">View <%= trail.name %></a><br>
-<a href="/trails/<%= trail.slug %>/edit">Edit <%= trail.name %> </a><br>
-<a href="/trails/<%= trail.slug %>/delete">Delete <%= trail.name %></a><br>
+<a href="/trails/<%= trail.id %>">View <%= trail.name %></a><br>
+<a href="/trails/<%= trail.id %>/edit">Edit <%= trail.name %> </a><br>
+<a href="/trails/<%= trail.id %>/delete">Delete <%= trail.name %></a><br>
 <%end%>
 <br><br>
 <a href="/trails/new">Create A Trail</a>
