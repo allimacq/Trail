@@ -9,7 +9,7 @@
 
     <h4>Edit State:</h4>
     <% State.all.each do |state|%>
-    <input type="radio" name="trail[state_id]" value="<%= state.id %>"><%= state.name %>
+    <input type="radio" name="trail[state_id]" value="<%= state.id %>" required><%= state.name %>
     <% end %>
 
     <h4>Edit Trail Name:</h4>
@@ -22,17 +22,8 @@
     <input type="text" name="trail[distance]" value="<%= @trail.distance %>" required>
 
     <h4>Edit Trail Surface(s):</h4>
-    <% surfaces = [ ]%>
-    <% Trail.all.each do |trail|%>
-        <% trail.surface.split(", ").each do |surface|%>
-            <% if surfaces.include?(surface) == false %>
-                <% surfaces << surface %>
-                <%end%>
-        <% end %>
-    <%end%>
-    <% surfaces.each do |surface| %>
-    <input type="checkbox" name="trail[surface][]" value="<%= surface.strip %>%" <%='checked' if @trail.surface.include?(surface)%>><%= surface %>
-    <% end %><br>
+    <input type="text" name="trail[surface]" value="<%= @trail.surface%>" required>
+    <br>
    
 
     <br>

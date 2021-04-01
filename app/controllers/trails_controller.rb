@@ -15,26 +15,36 @@ class TrailsController < ApplicationController
             @user = User.user(session)
             erb :'/trails/new'
         else
-            #flash message that user must be logged in to create new trails and redirect to login page
+            flash[:message] = "You must be logged in to add a trail."
             redirect "/login"
         end
     end
 
     get '/trails/:id' do
         @trail = Trail.find_by_id(params[:id])
-        @user = User.find_by_id(@trail.user_id)
+        #@user = User.find_by_id(@trail.user_id)
         erb :'/trails/show'
     end
 
     get "/trails/:id/edit" do
-        if session[:user_id] == @trail.user_id
-            @trail = Trail.find_by_id(params[:id])
+        @trail = Trail.find_by_id(params[:id])
+        if session[:user_id] && session[:user_id] == @trail.user_id
             erb :'/trails/edit'
         else
+            flash[:message] = "You can only edit trails you've made."
             redirect "/"
         end
     end
 
+    get '/trails/:id/delete' do
+        @trail = Trail.find_by_id(params[:id])
+        if session[:user_id] && session[:user_id] == @trail.user_id
+            erb :'/trails/delete'
+        else
+            flash[:message] = "You can only delete your own trails."
+            redirect "/"
+        end
+    end
 
     post "/trails/new" do
         if params[:trail].empty? == false
@@ -45,7 +55,7 @@ class TrailsController < ApplicationController
             @state.save
             @user.trails << @trail
             flash[:message] = "Trail successfully added! Thank you for your contribution!"
-            redirect "/trails/#{@trail.slug}"
+            redirect "/trails/#{@trail.id}"
         else
             flash[:message] = "Error. Please try again."
             redirect "/"
@@ -73,13 +83,8 @@ class TrailsController < ApplicationController
 
     delete "/trails/:id/delete" do
         @trail = Trail.find_by_id(params[:id])
-        if session[:user_id] == @trail.user_id
-            @trail.delete
-            redirect "/users/#{session[:user_id]}"
-        else
-            flash[:message] = "You can only delete your own trails."
-            redirect "/users/#{session[:user_id]}"
-        end
+        @trail.delete
+        redirect "/users/#{session[:user_id]}"
     end
 
 

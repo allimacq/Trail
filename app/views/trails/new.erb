@@ -22,20 +22,11 @@
     <h4>Trail Length (in miles):</h4>
     <input type="text" name="trail[distance]" required>
 
-    <h4>Trail Surface:</h4>
-    <% surfaces = [ ]%>
-    <% Trail.all.each do |trail|%>
-        <% trail.surface.split(", ").each do |surface|%>
-            <% if surfaces.include?(surface) == false %>
-                <% surfaces << surface %>
-                <%end%>
-        <% end %>
-    <%end%>
-    <% surfaces.each do |surface| %>
-    <input type="checkbox" name="trail[surface][]" value="<%= surface.strip %>%"><%= surface %>
-    <% end %><br>
-   
-
+    <h4>Trail Surface(s):</h4>
+    <p>Please enter all surface types the trail has separated by commas</p>
+    <input type="text" name="trail[surface]" required>
+    <br>
+    <br>
     <br>
     <input type="submit" value="Create New Trail!">
 </form>

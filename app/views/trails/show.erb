@@ -1,3 +1,7 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1><%= @trail.name %></h1>
 
 <h4>Trail Info:</h4> 
@@ -8,8 +12,10 @@
 <%= @trail.surface%><br>
 <br>
 
-<a href="/trails/<%= @trail.id %>">Edit Trail</a>
+
 <% @state = State.find_by_id(@trail.state_id)%>
 <a href="/states/<%= @state.slug %>">View More Trails in <%= @state.name %> </a><br>
-
-<a href="/">Home</a>
+<%if session[:user_id] %>
+  <a href="/users/<%= User.user(session).id %>">View Homepage</a><br>
+  <%end%>
+<a href="/">Front Page</a>

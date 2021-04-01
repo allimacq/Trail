@@ -1,3 +1,7 @@
+<% if flash.has?(:message) %>
+  <h3> <%= flash[:message] %></h3>
+<% end %>
+
 <h1>Find Accessible Trails by State!</h1>
 <ul><a href="/login">Log In</a>
 <a href="/signup">Sign Up</a></ul>

@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         #logged in users cannot view this. will redirect them to the homepage
         #if User.logged_in?(session)
         if session[:user_id]
-            redirect "/"
+            redirect "/users/#{session[:user_id]}"
         else
             erb :"/users/login"
         end

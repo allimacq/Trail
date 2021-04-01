@@ -1,0 +1,6 @@
+<form method="post" action="/trails/<%= @trail.id %>/delete" id="delete">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <label>Are You Sure You Want To Delete?</label>
+  <input type="submit" value="Delete">
+</form>
+<a href="/users/<%= session[:user_id]%>">Go Back to Homepage</a>
