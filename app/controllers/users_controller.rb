@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     post '/signup' do
         #don't want any fields left blank
-        if params[:username].empty? || params[:password].empty?
+        if params[:username].empty? || params[:password].empty? || User.find_by(username: params[:username])
             flash[:message] = "Sign up unsuccessful. Please try again."
             redirect "/signup"
         else
