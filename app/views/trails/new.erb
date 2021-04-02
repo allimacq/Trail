@@ -8,7 +8,7 @@
 
     <h4>Select Which State the Trail is In:</h4>
     <% State.all.each do |state|%>
-    <input type="radio" name="trail[state_id]" value="<%= state.id %>"><%= state.name %>
+    <input type="radio" name="trail[state_id]" value="<%= state.id %>" required><%= state.name %>
     <% end %>
 
     <h4>Trail Name:</h4>
